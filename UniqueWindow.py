@@ -6,7 +6,7 @@
 #    By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/21 22:45:07 by jaguillo          #+#    #+#              #
-#    Updated: 2015/04/22 00:26:12 by juloo            ###   ########.fr        #
+#    Updated: 2015/04/22 17:48:11 by jaguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,15 @@ class JulooUniqueWindow(EventListener):
 		self.on_new_window(view)
 
 	def on_new_window(self, view):
+		if self.window != None and not self.window.is_valid():
+			self.window = None
 		if self.window == None:
 			self.window = view.window()
 		elif self.window != view.window() and len(view.window().views()) == 0:
 			print("Merged new empty window")
 			data = self.window.project_data()
+			if data == None:
+				data = {}
 			if not "folders" in data:
 				data['folders'] = []
 			for f in view.window().folders():
